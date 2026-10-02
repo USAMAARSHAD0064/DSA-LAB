@@ -1,0 +1,128 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+template <class T, int n>
+void printArray(T (&arr)[n])
+{
+    for (int i = 0; i < n; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+template <class T, int n>
+void selectionSort(T (&arr)[n])
+{
+    for (int i = 0; i < n - 1; i++)
+    {
+        int small = i;
+        for (int j = i + 1; j < n; j++)
+        {
+            if (arr[j] < arr[small])
+            {
+                small = j;
+            }
+        }
+        T temp = arr[i];
+        arr[i] = arr[small];
+        arr[small] = temp;
+    }
+}
+
+template <class T, int n>
+int linearSearch(T (&arr)[n], T key)
+{
+    for (int i = 0; i < n; i++)
+    {
+        if (arr[i] == key)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
+template <class T, int n>
+int binarySearch(T (&arr)[n], T key)
+{
+    int low = 0;
+    int high = n - 1;
+    while (low <= high)
+    {
+        int mid = (low + high) / 2;
+        if (arr[mid] == key)
+        {
+            return mid;
+        }
+        else if (arr[mid] < key)
+        {
+            low = mid + 1;
+        }
+        else
+        {
+            high = mid - 1;
+        }
+    }
+    return -1;
+}
+
+template <class T>
+void printSearchResult(int index, T key)
+{
+    if (index == -1)
+    {
+        cout << key << " not found in the array" << endl;
+    }
+    else
+    {
+        cout << key << " found at index " << index << endl;
+    }
+}
+
+int main()
+{
+    cout << "Task 2" << endl;
+    int a1[5] = {64, 25, 12, 22, 11};
+    cout << "Original integer array: ";
+    printArray(a1);
+    selectionSort(a1);
+    cout << "Sorted integer array: ";
+    printArray(a1);
+
+    string s1[4] = {"apple", "orange", "banana", "grape"};
+    cout << "\nOriginal string array: ";
+    printArray(s1);
+    selectionSort(s1);
+    cout << "Sorted string array: ";
+    printArray(s1);
+
+    cout << "\nTask 3" << endl;
+    int a2[5] = {64, 25, 12, 22, 11};
+    int intKey = 12;
+    printSearchResult(linearSearch(a2, intKey), intKey);
+
+    float f2[4] = {3.14, 2.71, 1.62, 0.57};
+    float floatKey = 1.62;
+    printSearchResult(linearSearch(f2, floatKey), floatKey);
+
+    string s2[4] = {"apple", "orange", "banana", "grape"};
+    string stringKey = "banana";
+    printSearchResult(linearSearch(s2, stringKey), stringKey);
+
+    cout << "\nTask 4" << endl;
+    int a3[5] = {11, 12, 22, 25, 64};
+    int intKey2 = 22;
+    printSearchResult(binarySearch(a3, intKey2), intKey2);
+
+    float f3[4] = {0.57, 1.62, 2.71, 3.14};
+    float floatKey2 = 2.71;
+    printSearchResult(binarySearch(f3, floatKey2), floatKey2);
+
+    string s3[4] = {"apple", "banana", "grape", "orange"};
+    string stringKey2 = "grape";
+    printSearchResult(binarySearch(s3, stringKey2), stringKey2);
+
+    return 0;
+}
